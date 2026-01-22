@@ -83,14 +83,15 @@ if (!DISCORD_CLIENT_ID || !DISCORD_CLIENT_SECRET || !SESSION_SECRET) {
 app.use(session({
     secret: SESSION_SECRET,
     resave: false,
-    saveUninitialized: false,
-    name: 'sessionId', // Don't use default name
+    saveUninitialized: true, // Changed to true to save OAuth sessions
+    name: 'sessionId',
     cookie: { 
         maxAge: 7 * 24 * 60 * 60 * 1000,
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'production', // HTTPS only in production
+        secure: true,
         sameSite: 'lax'
-    }
+    },
+    proxy: true // Trust Render proxy
 }));
 
 // Passport configuration
@@ -182,9 +183,15 @@ function getStickyConfigs() {
 // ===== AUTHENTICATION MIDDLEWARE =====
 
 function isAuth(req, res, next) {
+    console.log('🔒 Auth check - Session:', req.sessionID);
+    console.log('🔒 Auth check - User:', req.user?.username);
+    console.log('🔒 Auth check - Authenticated:', req.isAuthenticated());
+    
     if (req.isAuthenticated()) {
         return next();
     }
+    
+    console.log('❌ Not authenticated, sending 401');
     res.status(401).json({ error: 'Not authenticated' });
 }
 
@@ -222,6 +229,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/dashboard', isAuth, (req, res) => {
+    console.log('📊 Dashboard accessed by:', req.user?.username);
     res.sendFile(path.join(__dirname, 'public', 'dashboard.html'));
 });
 
@@ -235,7 +243,19 @@ app.get('/auth/discord/callback',
         failureMessage: true
     }),
     (req, res) => {
-        res.redirect('/dashboard');
+        console.log('✅ OAuth success! User:', req.user?.username);
+        console.log('📝 Session ID:', req.sessionID);
+        console.log('🔐 Authenticated:', req.isAuthenticated());
+        
+        // Explicitly save session before redirect
+        req.session.save((err) => {
+            if (err) {
+                console.error('❌ Session save error:', err);
+                return res.redirect('/?error=session');
+            }
+            console.log('💾 Session saved, redirecting to dashboard');
+            res.redirect('/dashboard');
+        });
     }
 );
 
