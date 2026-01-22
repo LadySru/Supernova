@@ -1,0 +1,27 @@
+{
+  "name": "ephemeral-sticky-bot",
+  "version": "2.0.0",
+  "description": "Secure Discord bot with ephemeral sticky messages and MEE6-style dashboard",
+  "main": "ephemeral-bot.js",
+  "private": true,
+  "scripts": {
+    "start": "node ephemeral-bot.js"
+  },
+  "keywords": ["discord", "bot", "sticky", "ephemeral", "dashboard", "oauth"],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^14.16.3",
+    "express": "^4.18.2",
+    "express-session": "^1.17.3",
+    "passport": "^0.7.0",
+    "passport-discord": "^0.1.4",
+    "multer": "^1.4.5-lts.1",
+    "helmet": "^7.1.0",
+    "express-rate-limit": "^7.1.5",
+    "validator": "^13.11.0"
+  },
+  "engines": {
+    "node": "20.x"
+  }
+}

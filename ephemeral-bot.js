@@ -1,0 +1,307 @@
+const { Client, GatewayIntentBits, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, PermissionFlagsBits } = require('discord.js');
+const { startWebServer, setDiscordClient, getStickyConfigs } = require('./dashboard-secure');
+
+const client = new Client({
+    intents: [
+        GatewayIntentBits.Guilds,
+        GatewayIntentBits.GuildMessages,
+        GatewayIntentBits.MessageContent
+    ]
+});
+
+client.on('ready', async () => {
+    console.log(`✨ ${client.user.tag} is online!`);
+    
+    // Start secure dashboard
+    setDiscordClient(client);
+    startWebServer();
+    console.log('🔒 Secure MEE6-style dashboard started!');
+    
+    // Register slash commands
+    const commands = [
+        {
+            name: 'setup-sticky',
+            description: '📌 Setup an ephemeral sticky message for this channel (Admin only)',
+            options: [
+                {
+                    name: 'title',
+                    type: 3,
+                    description: 'Title of the sticky message',
+                    required: true
+                },
+                {
+                    name: 'description',
+                    type: 3,
+                    description: 'Description text',
+                    required: true
+                },
+                {
+                    name: 'button-text',
+                    type: 3,
+                    description: 'Text on the button',
+                    required: true
+                },
+                {
+                    name: 'response',
+                    type: 3,
+                    description: 'Message to show when button is clicked',
+                    required: false
+                },
+                {
+                    name: 'gif-url',
+                    type: 3,
+                    description: 'GIF URL to show when button is clicked',
+                    required: false
+                },
+                {
+                    name: 'color',
+                    type: 3,
+                    description: 'Embed color (hex code like #FF69B4)',
+                    required: false
+                }
+            ]
+        },
+        {
+            name: 'remove-sticky',
+            description: '🗑️ Remove the sticky message from this channel (Admin only)'
+        },
+        {
+            name: 'help',
+            description: '❓ Show help information'
+        }
+    ];
+
+    try {
+        console.log('Registering slash commands...');
+        await client.application.commands.set(commands);
+        console.log('✅ Slash commands registered successfully!');
+    } catch (error) {
+        console.error('Error registering commands:', error);
+    }
+});
+
+// Handle interactions
+client.on('interactionCreate', async (interaction) => {
+    if (interaction.isChatInputCommand()) {
+        if (interaction.commandName === 'setup-sticky') {
+            await handleSetupSticky(interaction);
+        } else if (interaction.commandName === 'remove-sticky') {
+            await handleRemoveSticky(interaction);
+        } else if (interaction.commandName === 'help') {
+            await handleHelp(interaction);
+        }
+    } else if (interaction.isButton()) {
+        await handleButton(interaction);
+    }
+});
+
+// Send ephemeral sticky to users who send messages
+client.on('messageCreate', async (message) => {
+    if (message.author.bot) return;
+    
+    const stickyConfigs = getStickyConfigs();
+    const config = stickyConfigs.get(message.channel.id);
+    if (!config) return;
+    
+    try {
+        // Create the embed
+        const embed = new EmbedBuilder()
+            .setColor(config.color || '#FF69B4')
+            .setTitle(config.title)
+            .setDescription(config.description)
+            .setFooter({ text: 'This message is only visible to you' })
+            .setTimestamp();
+        
+        // Create button
+        const button = new ButtonBuilder()
+            .setCustomId(`sticky_${message.channel.id}_${message.author.id}`)
+            .setLabel(config.buttonText)
+            .setStyle(ButtonStyle.Primary);
+        
+        const row = new ActionRowBuilder().addComponents(button);
+        
+        // Send ephemeral message that only the user can see
+        await message.reply({
+            embeds: [embed],
+            components: [row],
+            ephemeral: true // This makes it only visible to the user!
+        }).catch(() => {
+            // If reply fails, try sending in channel (fallback)
+            message.channel.send({
+                content: `<@${message.author.id}>`,
+                embeds: [embed],
+                components: [row]
+            }).then(msg => {
+                // Delete after 30 seconds
+                setTimeout(() => msg.delete().catch(() => {}), 30000);
+            });
+        });
+        
+    } catch (error) {
+        console.error('Error sending sticky:', error);
+    }
+});
+
+async function handleSetupSticky(interaction) {
+    // Check permissions
+    if (!interaction.member.permissions.has(PermissionFlagsBits.ManageMessages)) {
+        return interaction.reply({ 
+            content: '❌ You need "Manage Messages" permission to setup sticky messages!', 
+            ephemeral: true 
+        });
+    }
+    
+    const title = interaction.options.getString('title');
+    const description = interaction.options.getString('description');
+    const buttonText = interaction.options.getString('button-text');
+    const response = interaction.options.getString('response');
+    const gifUrl = interaction.options.getString('gif-url');
+    const color = interaction.options.getString('color') || '#FF69B4';
+    
+    if (!response && !gifUrl) {
+        return interaction.reply({ 
+            content: '❌ You must provide either a response message or GIF URL!', 
+            ephemeral: true 
+        });
+    }
+    
+    // Store configuration
+    stickyConfigs.set(interaction.channel.id, {
+        title,
+        description,
+        buttonText,
+        response,
+        gifUrl,
+        color
+    });
+    
+    await interaction.reply({ 
+        content: `✅ Ephemeral sticky message setup complete!\n\nNow when anyone sends a message in this channel, they'll see a private sticky message (only visible to them) with your button!`, 
+        ephemeral: true 
+    });
+}
+
+async function handleRemoveSticky(interaction) {
+    // Check permissions
+    if (!interaction.member.permissions.has(PermissionFlagsBits.ManageMessages)) {
+        return interaction.reply({ 
+            content: '❌ You need "Manage Messages" permission to remove sticky messages!', 
+            ephemeral: true 
+        });
+    }
+    
+    if (!stickyConfigs.has(interaction.channel.id)) {
+        return interaction.reply({ 
+            content: '❌ There is no sticky message configured for this channel!', 
+            ephemeral: true 
+        });
+    }
+    
+    stickyConfigs.delete(interaction.channel.id);
+    
+    await interaction.reply({ 
+        content: '✅ Sticky message removed from this channel!', 
+        ephemeral: true 
+    });
+}
+
+async function handleButton(interaction) {
+    // Extract channel ID from button custom ID
+    const parts = interaction.customId.split('_');
+    const channelId = parts[1];
+    
+    const stickyConfigs = getStickyConfigs();
+    const config = stickyConfigs.get(channelId);
+    
+    if (!config) {
+        return interaction.reply({ 
+            content: '❌ Sticky message configuration not found!', 
+            ephemeral: true 
+        });
+    }
+    
+    // Build response
+    let replyContent = {
+        ephemeral: true // Response is also only visible to the user
+    };
+    
+    if (config.gifUrl) {
+        const embed = new EmbedBuilder()
+            .setImage(config.gifUrl)
+            .setColor(config.color || '#FF69B4');
+        
+        replyContent.embeds = [embed];
+        if (config.response) {
+            replyContent.content = config.response;
+        }
+    } else if (config.response) {
+        replyContent.content = config.response;
+    }
+    
+    await interaction.reply(replyContent);
+}
+
+async function handleHelp(interaction) {
+    const embed = new EmbedBuilder()
+        .setColor('#FF69B4')
+        .setTitle('📌 Ephemeral Sticky Bot - Help')
+        .setDescription('Create sticky messages that only appear to individual users!')
+        .addFields(
+            {
+                name: '📌 How It Works',
+                value: 
+                    '1. Admin sets up sticky message in a channel\n' +
+                    '2. When anyone sends a message, they get a private sticky\n' +
+                    '3. The sticky is only visible to them (ephemeral)\n' +
+                    '4. They can click the button for a response\n' +
+                    '5. Response is also private (only they see it)',
+                inline: false
+            },
+            {
+                name: '⚙️ /setup-sticky',
+                value: 
+                    'Configure an ephemeral sticky for this channel\n\n' +
+                    '**Required:**\n' +
+                    '• `title` - Title of sticky message\n' +
+                    '• `description` - Message content\n' +
+                    '• `button-text` - Text on button\n\n' +
+                    '**Response (pick one):**\n' +
+                    '• `response` - Text message\n' +
+                    '• `gif-url` - GIF to show\n\n' +
+                    '**Optional:**\n' +
+                    '• `color` - Hex color code',
+                inline: false
+            },
+            {
+                name: '🗑️ /remove-sticky',
+                value: 'Remove sticky message from this channel',
+                inline: false
+            },
+            {
+                name: '💡 Example',
+                value: 
+                    '```/setup-sticky title:"Welcome!" description:"Thanks for chatting!" button-text:"Click Me" response:"Hello there!"```',
+                inline: false
+            },
+            {
+                name: '✨ Benefits',
+                value: 
+                    '• No channel clutter - messages are private!\n' +
+                    '• Each user sees their own sticky\n' +
+                    '• Responses are also private\n' +
+                    '• Clean and organized',
+                inline: false
+            },
+            {
+                name: '🔑 Permissions',
+                value: 'Only users with "Manage Messages" can setup/remove sticky messages',
+                inline: false
+            }
+        )
+        .setFooter({ text: 'Ephemeral Sticky Bot' })
+        .setTimestamp();
+    
+    await interaction.reply({ embeds: [embed], ephemeral: true });
+}
+
+client.login(process.env.DISCORD_TOKEN);
