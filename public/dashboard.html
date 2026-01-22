@@ -11,224 +11,249 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: #36393f;
             color: #dcddde;
-        }
-        
-        .navbar {
-            background: #202225;
-            padding: 15px 30px;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            height: 100vh;
+            overflow: hidden;
         }
         
-        .logo {
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background: #2f3136;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid #202225;
+        }
+        
+        .sidebar-header {
+            padding: 20px;
+            background: #202225;
+            border-bottom: 1px solid #1a1c1f;
+        }
+        
+        .sidebar-header h2 {
+            font-size: 20px;
+            color: white;
             display: flex;
             align-items: center;
             gap: 10px;
-            font-size: 24px;
-            font-weight: bold;
         }
         
-        .user-info {
+        .user-section {
+            padding: 15px 20px;
+            background: #292b2f;
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 12px;
+            border-bottom: 1px solid #1a1c1f;
         }
         
-        .avatar {
+        .user-avatar {
             width: 40px;
             height: 40px;
             border-radius: 50%;
+        }
+        
+        .user-info h3 {
+            font-size: 14px;
+            color: white;
         }
         
         .logout-btn {
             background: #ed4245;
             color: white;
             border: none;
-            padding: 8px 16px;
-            border-radius: 5px;
+            padding: 6px 12px;
+            border-radius: 4px;
             cursor: pointer;
-            font-weight: bold;
+            font-size: 12px;
+            margin-top: 4px;
         }
         
         .logout-btn:hover { background: #c03537; }
         
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 40px 20px;
+        .servers-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 10px 0;
         }
         
-        .section-title {
-            font-size: 28px;
-            margin-bottom: 30px;
-            color: white;
+        .servers-list::-webkit-scrollbar {
+            width: 8px;
         }
         
-        .servers-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
-            margin-bottom: 60px;
+        .servers-list::-webkit-scrollbar-thumb {
+            background: #202225;
+            border-radius: 4px;
         }
         
-        .server-card {
-            background: #2f3136;
-            padding: 20px;
-            border-radius: 10px;
+        .server-item {
+            padding: 12px 20px;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.2s;
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 12px;
+            border-left: 3px solid transparent;
         }
         
-        .server-card:hover {
+        .server-item:hover {
             background: #35383e;
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            border-left-color: #5865F2;
         }
         
-        .server-icon {
-            width: 60px;
-            height: 60px;
+        .server-item.active {
+            background: #35383e;
+            border-left-color: #5865F2;
+        }
+        
+        .server-item-icon {
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             background: #5865F2;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 24px;
+            font-size: 18px;
             font-weight: bold;
             color: white;
+            flex-shrink: 0;
         }
         
-        .server-info h3 {
-            font-size: 20px;
+        .server-item-name {
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        
+        .top-bar {
+            background: #202225;
+            padding: 20px 30px;
+            border-bottom: 1px solid #1a1c1f;
+        }
+        
+        .top-bar h1 {
+            font-size: 24px;
+            color: white;
             margin-bottom: 5px;
         }
         
-        .server-info p {
+        .top-bar p {
             color: #b9bbbe;
             font-size: 14px;
         }
         
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            z-index: 1000;
+        .content-area {
+            flex: 1;
             overflow-y: auto;
-        }
-        
-        .modal-content {
-            background: #36393f;
-            max-width: 1400px;
-            margin: 50px auto;
-            border-radius: 10px;
             padding: 30px;
-            max-height: 90vh;
-            overflow-y: auto;
         }
         
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
+        .content-area::-webkit-scrollbar {
+            width: 10px;
         }
         
-        .close-btn {
-            background: none;
-            border: none;
-            color: #b9bbbe;
-            font-size: 28px;
-            cursor: pointer;
+        .content-area::-webkit-scrollbar-thumb {
+            background: #202225;
+            border-radius: 5px;
         }
         
-        .close-btn:hover { color: white; }
-        
-        .channels-list {
-            display: grid;
-            gap: 15px;
-            margin-bottom: 30px;
-        }
-        
-        .channel-item {
+        /* Section Styling */
+        .section {
             background: #2f3136;
-            padding: 15px;
-            border-radius: 8px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 30px;
         }
         
-        .channel-name {
+        .section-title {
+            font-size: 20px;
+            color: white;
+            margin-bottom: 20px;
             display: flex;
             align-items: center;
             gap: 10px;
         }
         
-        .sticky-badge {
-            background: #3ba55d;
-            color: white;
-            padding: 4px 12px;
-            border-radius: 12px;
-            font-size: 12px;
-            font-weight: bold;
+        /* Channel Selector */
+        .channel-selector {
+            margin-bottom: 20px;
         }
         
-        .btn {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
+        .channel-selector label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #b9bbbe;
+        }
+        
+        .channel-dropdown {
+            width: 100%;
+            padding: 12px 15px;
+            background: #202225;
+            border: 2px solid #2f3136;
+            border-radius: 8px;
+            color: #dcddde;
+            font-size: 15px;
             cursor: pointer;
-            font-weight: bold;
-            transition: all 0.3s;
+            transition: all 0.2s;
         }
         
-        .btn-primary {
-            background: #5865F2;
-            color: white;
+        .channel-dropdown:hover {
+            border-color: #5865F2;
         }
         
-        .btn-primary:hover { background: #4752C4; }
-        
-        .btn-danger {
-            background: #ed4245;
-            color: white;
+        .channel-dropdown:focus {
+            outline: none;
+            border-color: #5865F2;
         }
         
-        .btn-danger:hover { background: #c03537; }
-        
-        .btn-success {
-            background: #3ba55d;
-            color: white;
+        .channel-dropdown option {
+            background: #2f3136;
+            padding: 10px;
         }
         
-        .btn-success:hover { background: #2d7d46; }
+        /* Configuration Area */
+        .config-area {
+            display: none;
+            animation: fadeIn 0.3s;
+        }
+        
+        .config-area.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
         
         .tabs {
             display: flex;
             gap: 10px;
-            margin-bottom: 30px;
-            border-bottom: 2px solid #2f3136;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #202225;
         }
         
         .tab {
-            padding: 15px 30px;
+            padding: 12px 24px;
             background: none;
             border: none;
             color: #b9bbbe;
             cursor: pointer;
-            font-size: 16px;
-            font-weight: bold;
+            font-size: 15px;
+            font-weight: 600;
             border-bottom: 3px solid transparent;
-            transition: all 0.3s;
+            transition: all 0.2s;
+            margin-bottom: -2px;
         }
         
         .tab:hover { color: white; }
@@ -246,6 +271,7 @@
             display: block;
         }
         
+        /* Form Styling */
         .form-group {
             margin-bottom: 20px;
         }
@@ -253,18 +279,25 @@
         label {
             display: block;
             margin-bottom: 8px;
-            font-weight: bold;
+            font-weight: 600;
             color: #b9bbbe;
+            font-size: 14px;
         }
         
         input, textarea, select {
             width: 100%;
-            padding: 12px;
+            padding: 12px 15px;
             background: #202225;
-            border: 1px solid #2f3136;
-            border-radius: 5px;
+            border: 2px solid #2f3136;
+            border-radius: 8px;
             color: #dcddde;
             font-size: 14px;
+            transition: all 0.2s;
+        }
+        
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #5865F2;
         }
         
         textarea {
@@ -272,16 +305,46 @@
             min-height: 100px;
         }
         
-        .search-bar {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
+        /* Buttons */
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.2s;
         }
         
-        .search-bar input {
-            flex: 1;
+        .btn-primary {
+            background: #5865F2;
+            color: white;
         }
         
+        .btn-primary:hover {
+            background: #4752C4;
+            transform: translateY(-1px);
+        }
+        
+        .btn-success {
+            background: #3ba55d;
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background: #2d7d46;
+        }
+        
+        .btn-danger {
+            background: #ed4245;
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background: #c03537;
+        }
+        
+        /* GIF Sources */
         .gif-source-tabs {
             display: flex;
             gap: 10px;
@@ -290,14 +353,12 @@
         
         .source-tab {
             padding: 10px 20px;
-            background: #2f3136;
+            background: #202225;
             border: 2px solid transparent;
             border-radius: 8px;
             cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            transition: all 0.2s;
+            font-size: 14px;
         }
         
         .source-tab:hover {
@@ -309,11 +370,22 @@
             background: #35383e;
         }
         
+        /* Search Bar */
+        .search-bar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .search-bar input {
+            flex: 1;
+        }
+        
+        /* GIF Selector */
         .gif-selector {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
             gap: 15px;
-            margin-top: 15px;
             max-height: 400px;
             overflow-y: auto;
             padding: 10px;
@@ -327,7 +399,7 @@
             border-radius: 8px;
             overflow: hidden;
             border: 3px solid transparent;
-            transition: all 0.3s;
+            transition: all 0.2s;
         }
         
         .gif-option.selected {
@@ -358,6 +430,7 @@
             font-size: 12px;
         }
         
+        /* Mode Selector */
         .mode-selector {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -366,16 +439,18 @@
         }
         
         .mode-option {
-            background: #2f3136;
+            background: #202225;
             padding: 20px;
             border-radius: 8px;
             text-align: center;
             cursor: pointer;
             border: 2px solid transparent;
-            transition: all 0.3s;
+            transition: all 0.2s;
         }
         
-        .mode-option:hover { background: #35383e; }
+        .mode-option:hover {
+            background: #35383e;
+        }
         
         .mode-option.selected {
             border-color: #5865F2;
@@ -397,55 +472,7 @@
             color: #b9bbbe;
         }
         
-        .preview-section {
-            background: #2f3136;
-            padding: 20px;
-            border-radius: 10px;
-            margin-top: 20px;
-        }
-        
-        .preview-title {
-            font-size: 20px;
-            margin-bottom: 15px;
-            color: white;
-        }
-        
-        .preview-embed {
-            background: #202225;
-            border-left: 4px solid #FF69B4;
-            border-radius: 5px;
-            padding: 15px;
-            max-width: 500px;
-            margin-bottom: 15px;
-        }
-        
-        .preview-embed-title {
-            font-size: 18px;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-        
-        .preview-embed-description {
-            color: #b9bbbe;
-            margin-bottom: 15px;
-        }
-        
-        .preview-gif {
-            width: 100%;
-            max-width: 400px;
-            border-radius: 5px;
-            margin-bottom: 15px;
-        }
-        
-        .preview-button {
-            display: inline-block;
-            background: #5865F2;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 5px;
-            font-weight: bold;
-        }
-        
+        /* Selected GIFs List */
         .selected-gifs-list {
             display: flex;
             gap: 10px;
@@ -484,9 +511,6 @@
             border-radius: 50%;
             cursor: pointer;
             font-size: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
         
         .gif-count {
@@ -496,38 +520,59 @@
             border-radius: 12px;
             font-size: 12px;
             font-weight: bold;
-            display: inline-block;
         }
         
-        .section-header {
-            background: #2f3136;
+        /* Preview */
+        .preview-embed {
+            background: #202225;
+            border-left: 4px solid #FF69B4;
+            border-radius: 5px;
             padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            border-left: 4px solid #5865F2;
+            max-width: 500px;
+            margin-bottom: 15px;
         }
         
-        .section-header h3 {
-            color: white;
-            margin-bottom: 5px;
+        .preview-embed-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
         }
         
-        .section-header p {
+        .preview-embed-description {
             color: #b9bbbe;
-            font-size: 14px;
+            margin-bottom: 15px;
         }
         
+        .preview-gif {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+        
+        .preview-button {
+            display: inline-block;
+            background: #5865F2;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        
+        /* GIF Library */
         .upload-area {
             border: 2px dashed #5865F2;
             border-radius: 10px;
             padding: 40px;
             text-align: center;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.2s;
             margin-bottom: 20px;
         }
         
-        .upload-area:hover { background: #2f3136; }
+        .upload-area:hover {
+            background: #2f3136;
+        }
         
         .gif-gallery {
             display: grid;
@@ -559,27 +604,15 @@
             align-items: center;
             justify-content: center;
             opacity: 0;
-            transition: opacity 0.3s;
-            gap: 10px;
+            transition: opacity 0.2s;
         }
         
-        .gif-item:hover .gif-overlay { opacity: 1; }
-        
-        .gif-overlay button {
-            padding: 5px 10px;
-            border: none;
-            border-radius: 3px;
-            cursor: pointer;
-            font-size: 12px;
+        .gif-item:hover .gif-overlay {
+            opacity: 1;
         }
         
-        .loading {
-            text-align: center;
-            padding: 40px;
-            color: #b9bbbe;
-        }
-        
-        .success-message, .error-message {
+        /* Messages */
+        .success-message, .error-message, .info-message {
             padding: 15px;
             border-radius: 8px;
             margin-bottom: 20px;
@@ -593,6 +626,17 @@
         .error-message {
             background: #ed4245;
             color: white;
+        }
+        
+        .info-message {
+            background: #5865F2;
+            color: white;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #b9bbbe;
         }
         
         .info-box {
@@ -622,283 +666,266 @@
             margin-bottom: 10px;
         }
         
-        .keyword-mode-info p {
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
             color: #b9bbbe;
-            font-size: 13px;
-            line-height: 1.6;
+        }
+        
+        .empty-state-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+        
+        .empty-state h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: white;
         }
     </style>
 </head>
 <body>
-    <nav class="navbar">
-        <div class="logo">
-            <span>📌</span>
-            <span>Sticky Bot Dashboard</span>
-        </div>
-        <div class="user-info">
-            <img id="userAvatar" class="avatar" src="" alt="Avatar">
-            <span id="username"></span>
-            <button class="logout-btn" onclick="logout()">Logout</button>
-        </div>
-    </nav>
-    
-    <div class="container">
-        <h1 class="section-title">Your Servers</h1>
-        <div id="serversGrid" class="servers-grid">
-            <div class="loading">Loading your servers...</div>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h2>📌 Sticky Bot</h2>
         </div>
         
-        <h1 class="section-title">GIF Library</h1>
-        <div class="upload-area" id="uploadArea">
-            <div style="font-size: 48px; margin-bottom: 10px;">📁</div>
-            <p><strong>Click to upload</strong> or drag and drop</p>
-            <p style="color: #b9bbbe; font-size: 14px;">GIF, PNG, JPG (Max 10MB)</p>
+        <div class="user-section">
+            <img id="sidebarAvatar" class="user-avatar" src="" alt="Avatar">
+            <div class="user-info">
+                <h3 id="sidebarUsername">Loading...</h3>
+                <button class="logout-btn" onclick="logout()">Logout</button>
+            </div>
         </div>
-        <input type="file" id="fileInput" accept="image/gif,image/png,image/jpeg" style="display: none;">
-        <div id="gifGallery" class="gif-gallery"></div>
-    </div>
-    
-    <!-- Server Modal -->
-    <div id="serverModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 id="modalServerName">Server Name</h2>
-                <button class="close-btn" onclick="closeModal()">&times;</button>
-            </div>
-            <div id="channelsList" class="channels-list">
-                <div class="loading">Loading channels...</div>
-            </div>
+        
+        <div class="servers-list" id="serversList">
+            <div class="loading">Loading servers...</div>
         </div>
     </div>
     
-    <!-- Sticky Config Modal -->
-    <div id="stickyModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 id="stickyChannelName">Configure Sticky Message</h2>
-                <button class="close-btn" onclick="closeStickyModal()">&times;</button>
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="top-bar">
+            <h1 id="currentServerName">Select a Server</h1>
+            <p id="currentServerInfo">Choose a server from the sidebar to get started</p>
+        </div>
+        
+        <div class="content-area" id="contentArea">
+            <!-- Empty State -->
+            <div id="emptyState" class="empty-state">
+                <div class="empty-state-icon">👈</div>
+                <h3>Select a Server</h3>
+                <p>Choose a server from the sidebar to manage sticky messages</p>
             </div>
             
-            <div id="stickyMessage"></div>
-            
-            <!-- Tabs -->
-            <div class="tabs">
-                <button class="tab active" onclick="switchTab('sticky')">📌 Sticky Message</button>
-                <button class="tab" onclick="switchTab('button')">🔘 Button Response</button>
-                <button class="tab" onclick="switchTab('preview')">👁️ Preview</button>
+            <!-- Channel Management Section -->
+            <div id="channelManagement" style="display: none;">
+                <div class="section">
+                    <h2 class="section-title">⚙️ Channel Management</h2>
+                    
+                    <div class="channel-selector">
+                        <label>Select Channel</label>
+                        <select class="channel-dropdown" id="channelDropdown">
+                            <option value="">Choose a channel...</option>
+                        </select>
+                    </div>
+                    
+                    <div id="statusMessage"></div>
+                    
+                    <!-- Configuration Area (shows when channel selected) -->
+                    <div id="configArea" class="config-area">
+                        <!-- Tabs -->
+                        <div class="tabs">
+                            <button class="tab active" onclick="switchTab('sticky')">📌 Sticky Message</button>
+                            <button class="tab" onclick="switchTab('button')">🔘 Button Response</button>
+                            <button class="tab" onclick="switchTab('preview')">👁️ Preview</button>
+                        </div>
+                        
+                        <form id="stickyForm">
+                            <!-- Sticky Tab -->
+                            <div id="tab-sticky" class="tab-content active">
+                                <div class="form-group">
+                                    <label>Message Title</label>
+                                    <input type="text" id="stickyTitle" required placeholder="Welcome!">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label>Message Description</label>
+                                    <textarea id="stickyDescription" required placeholder="Thanks for chatting!"></textarea>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label>Embed Color</label>
+                                    <input type="color" id="stickyColor" value="#FF69B4">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label>Sticky GIFs <span class="gif-count" id="stickyGifCount">0 selected</span></label>
+                                    
+                                    <div class="gif-source-tabs">
+                                        <div class="source-tab active" onclick="switchGifSource('sticky', 'uploaded')">
+                                            📁 My Uploads
+                                        </div>
+                                        <div class="source-tab" onclick="switchGifSource('sticky', 'tenor')">
+                                            🔍 Search Tenor
+                                        </div>
+                                        <div class="source-tab" onclick="switchGifSource('sticky', 'keyword')">
+                                            🔤 Keywords
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="search-bar" id="stickySearchBar" style="display: none;">
+                                        <input type="text" id="stickySearchInput" placeholder="Search GIFs...">
+                                        <button type="button" class="btn btn-primary" onclick="searchGifs('sticky')">Search</button>
+                                    </div>
+                                    
+                                    <div class="form-group" id="stickyKeywordInput" style="display: none;">
+                                        <input type="text" id="stickyKeywords" placeholder="celebration, party, confetti">
+                                        <div class="keyword-mode-info">
+                                            <h4>🔤 Keyword Mode</h4>
+                                            <p>Bot auto-fetches fresh GIFs from Tenor using your keywords!</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="mode-selector">
+                                        <div class="mode-option selected" data-mode="random">
+                                            <div class="mode-icon">🎲</div>
+                                            <div class="mode-title">Random</div>
+                                            <div class="mode-desc">Different each time</div>
+                                        </div>
+                                        <div class="mode-option" data-mode="cycle">
+                                            <div class="mode-icon">🔄</div>
+                                            <div class="mode-title">Cycle</div>
+                                            <div class="mode-desc">Rotate in order</div>
+                                        </div>
+                                        <div class="mode-option" data-mode="single">
+                                            <div class="mode-icon">📌</div>
+                                            <div class="mode-title">Single</div>
+                                            <div class="mode-desc">Same always</div>
+                                        </div>
+                                        <div class="mode-option" data-mode="keyword">
+                                            <div class="mode-icon">🔤</div>
+                                            <div class="mode-title">Keyword</div>
+                                            <div class="mode-desc">Auto-fetch</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="selected-gifs-list" id="stickySelectedGifs">
+                                        <p style="color: #b9bbbe; margin: auto;">Select GIFs below</p>
+                                    </div>
+                                    
+                                    <div class="gif-selector" id="stickyGifSelector"></div>
+                                </div>
+                            </div>
+                            
+                            <!-- Button Tab -->
+                            <div id="tab-button" class="tab-content">
+                                <div class="form-group">
+                                    <label>Button Text</label>
+                                    <input type="text" id="buttonText" required placeholder="Click Me!">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label>Response Message</label>
+                                    <textarea id="buttonResponse" placeholder="Thanks for clicking!"></textarea>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label>Button GIFs <span class="gif-count" id="buttonGifCount">0 selected</span></label>
+                                    
+                                    <div class="gif-source-tabs">
+                                        <div class="source-tab active" onclick="switchGifSource('button', 'uploaded')">
+                                            📁 My Uploads
+                                        </div>
+                                        <div class="source-tab" onclick="switchGifSource('button', 'tenor')">
+                                            🔍 Search Tenor
+                                        </div>
+                                        <div class="source-tab" onclick="switchGifSource('button', 'keyword')">
+                                            🔤 Keywords
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="search-bar" id="buttonSearchBar" style="display: none;">
+                                        <input type="text" id="buttonSearchInput" placeholder="Search GIFs...">
+                                        <button type="button" class="btn btn-primary" onclick="searchGifs('button')">Search</button>
+                                    </div>
+                                    
+                                    <div class="form-group" id="buttonKeywordInput" style="display: none;">
+                                        <input type="text" id="buttonKeywords" placeholder="thumbs up, awesome">
+                                        <div class="keyword-mode-info">
+                                            <h4>🔤 Keyword Mode</h4>
+                                            <p>Bot auto-fetches fresh GIFs from Tenor!</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="mode-selector" id="buttonModeSelector">
+                                        <div class="mode-option selected" data-mode="random">
+                                            <div class="mode-icon">🎲</div>
+                                            <div class="mode-title">Random</div>
+                                        </div>
+                                        <div class="mode-option" data-mode="cycle">
+                                            <div class="mode-icon">🔄</div>
+                                            <div class="mode-title">Cycle</div>
+                                        </div>
+                                        <div class="mode-option" data-mode="single">
+                                            <div class="mode-icon">📌</div>
+                                            <div class="mode-title">Single</div>
+                                        </div>
+                                        <div class="mode-option" data-mode="keyword">
+                                            <div class="mode-icon">🔤</div>
+                                            <div class="mode-title">Keyword</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="selected-gifs-list" id="buttonSelectedGifs">
+                                        <p style="color: #b9bbbe; margin: auto;">Select GIFs below</p>
+                                    </div>
+                                    
+                                    <div class="gif-selector" id="buttonGifSelector"></div>
+                                </div>
+                            </div>
+                            
+                            <!-- Preview Tab -->
+                            <div id="tab-preview" class="tab-content">
+                                <h3 style="margin-bottom: 15px;">📌 Sticky Message Preview:</h3>
+                                <div class="preview-embed">
+                                    <div class="preview-embed-title" id="previewStickyTitle">Title</div>
+                                    <div class="preview-embed-description" id="previewStickyDescription">Description</div>
+                                    <img class="preview-gif" id="previewStickyGif" src="" style="display: none;">
+                                    <div class="preview-button" id="previewButton">Button</div>
+                                </div>
+                                
+                                <h3 style="margin: 30px 0 15px;">🔘 Button Response Preview:</h3>
+                                <div class="preview-embed">
+                                    <div class="preview-embed-description" id="previewButtonResponse">Response</div>
+                                    <img class="preview-gif" id="previewButtonGif" src="" style="display: none;">
+                                </div>
+                            </div>
+                            
+                            <div style="display: flex; gap: 10px; margin-top: 30px;">
+                                <button type="submit" class="btn btn-success">💾 Save Configuration</button>
+                                <button type="button" class="btn btn-danger" onclick="deleteSticky()">🗑️ Delete</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                
+                <!-- GIF Library Section -->
+                <div class="section">
+                    <h2 class="section-title">🎨 GIF Library</h2>
+                    
+                    <div class="upload-area" id="uploadArea">
+                        <div style="font-size: 48px; margin-bottom: 10px;">📁</div>
+                        <p><strong>Click to upload</strong> or drag and drop</p>
+                        <p style="color: #b9bbbe; font-size: 14px;">GIF, PNG, JPG (Max 10MB)</p>
+                    </div>
+                    <input type="file" id="fileInput" accept="image/gif,image/png,image/jpeg" style="display: none;">
+                    
+                    <div id="gifGallery" class="gif-gallery"></div>
+                </div>
             </div>
-            
-            <form id="stickyForm">
-                <!-- Sticky Message Tab -->
-                <div id="tab-sticky" class="tab-content active">
-                    <div class="section-header">
-                        <h3>📌 Sticky Message Configuration</h3>
-                        <p>This message appears to users when they send a message in the channel</p>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Message Title</label>
-                        <input type="text" id="stickyTitle" required placeholder="Welcome to our server!">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Message Description</label>
-                        <textarea id="stickyDescription" required placeholder="Thanks for chatting! Click the button below to get started."></textarea>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Embed Color</label>
-                        <input type="color" id="stickyColor" value="#FF69B4">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Sticky Message GIFs <span class="gif-count" id="stickyGifCount">0 selected</span></label>
-                        
-                        <!-- GIF Source Tabs -->
-                        <div class="gif-source-tabs">
-                            <div class="source-tab active" onclick="switchGifSource('sticky', 'uploaded')">
-                                📁 My Uploads
-                            </div>
-                            <div class="source-tab" onclick="switchGifSource('sticky', 'tenor')">
-                                🔍 Search Tenor
-                            </div>
-                            <div class="source-tab" onclick="switchGifSource('sticky', 'keyword')">
-                                🔤 Keyword Mode
-                            </div>
-                        </div>
-                        
-                        <!-- Search Bar (hidden by default) -->
-                        <div class="search-bar" id="stickySearchBar" style="display: none;">
-                            <input type="text" id="stickySearchInput" placeholder="Search for GIFs... (e.g., 'welcome', 'celebration')">
-                            <button type="button" class="btn btn-primary" onclick="searchGifs('sticky')">🔍 Search</button>
-                        </div>
-                        
-                        <!-- Keyword Input (hidden by default) -->
-                        <div class="form-group" id="stickyKeywordInput" style="display: none;">
-                            <label>Search Keywords (comma-separated)</label>
-                            <input type="text" id="stickyKeywords" placeholder="welcome, hello, celebration">
-                            <div class="keyword-mode-info">
-                                <h4>🔤 Keyword Mode</h4>
-                                <p>Bot will automatically search Tenor and cycle through GIFs matching your keywords. Perfect for dynamic, always-fresh content!</p>
-                                <p style="margin-top: 10px;"><strong>Example:</strong> "celebration, party, confetti" will show different celebration GIFs each time</p>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label>GIF Display Mode</label>
-                            <div class="mode-selector" id="stickyModeSelector">
-                                <div class="mode-option selected" data-mode="random">
-                                    <div class="mode-icon">🎲</div>
-                                    <div class="mode-title">Random</div>
-                                    <div class="mode-desc">Different GIF each time</div>
-                                </div>
-                                <div class="mode-option" data-mode="cycle">
-                                    <div class="mode-icon">🔄</div>
-                                    <div class="mode-title">Cycle</div>
-                                    <div class="mode-desc">Rotate in order</div>
-                                </div>
-                                <div class="mode-option" data-mode="single">
-                                    <div class="mode-icon">📌</div>
-                                    <div class="mode-title">Single</div>
-                                    <div class="mode-desc">Same GIF always</div>
-                                </div>
-                                <div class="mode-option" data-mode="keyword">
-                                    <div class="mode-icon">🔤</div>
-                                    <div class="mode-title">Keyword</div>
-                                    <div class="mode-desc">Auto-fetch from keywords</div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="selected-gifs-list" id="stickySelectedGifs">
-                            <p style="color: #b9bbbe; margin: auto;">Click GIFs below to add</p>
-                        </div>
-                        
-                        <div class="gif-selector" id="stickyGifSelector"></div>
-                    </div>
-                </div>
-                
-                <!-- Button Response Tab -->
-                <div id="tab-button" class="tab-content">
-                    <div class="section-header">
-                        <h3>🔘 Button Response Configuration</h3>
-                        <p>This is what users see when they click the button in the sticky message</p>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Button Text</label>
-                        <input type="text" id="buttonText" required placeholder="Click me!">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Response Message</label>
-                        <textarea id="buttonResponse" placeholder="Thanks for clicking! Here's your reward..."></textarea>
-                        <div class="info-box">
-                            <p>💡 Tip: This text message appears above the GIF when users click the button</p>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Button Response GIFs <span class="gif-count" id="buttonGifCount">0 selected</span></label>
-                        
-                        <!-- GIF Source Tabs -->
-                        <div class="gif-source-tabs">
-                            <div class="source-tab active" onclick="switchGifSource('button', 'uploaded')">
-                                📁 My Uploads
-                            </div>
-                            <div class="source-tab" onclick="switchGifSource('button', 'tenor')">
-                                🔍 Search Tenor
-                            </div>
-                            <div class="source-tab" onclick="switchGifSource('button', 'keyword')">
-                                🔤 Keyword Mode
-                            </div>
-                        </div>
-                        
-                        <!-- Search Bar (hidden by default) -->
-                        <div class="search-bar" id="buttonSearchBar" style="display: none;">
-                            <input type="text" id="buttonSearchInput" placeholder="Search for GIFs... (e.g., 'thank you', 'thumbs up')">
-                            <button type="button" class="btn btn-primary" onclick="searchGifs('button')">🔍 Search</button>
-                        </div>
-                        
-                        <!-- Keyword Input (hidden by default) -->
-                        <div class="form-group" id="buttonKeywordInput" style="display: none;">
-                            <label>Search Keywords (comma-separated)</label>
-                            <input type="text" id="buttonKeywords" placeholder="thank you, thumbs up, awesome">
-                            <div class="keyword-mode-info">
-                                <h4>🔤 Keyword Mode</h4>
-                                <p>Bot will automatically search Tenor and cycle through GIFs matching your keywords. Perfect for variety!</p>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label>GIF Display Mode</label>
-                            <div class="mode-selector" id="buttonModeSelector">
-                                <div class="mode-option selected" data-mode="random">
-                                    <div class="mode-icon">🎲</div>
-                                    <div class="mode-title">Random</div>
-                                    <div class="mode-desc">Different GIF each time</div>
-                                </div>
-                                <div class="mode-option" data-mode="cycle">
-                                    <div class="mode-icon">🔄</div>
-                                    <div class="mode-title">Cycle</div>
-                                    <div class="mode-desc">Rotate in order</div>
-                                </div>
-                                <div class="mode-option" data-mode="single">
-                                    <div class="mode-icon">📌</div>
-                                    <div class="mode-title">Single</div>
-                                    <div class="mode-desc">Same GIF always</div>
-                                </div>
-                                <div class="mode-option" data-mode="keyword">
-                                    <div class="mode-icon">🔤</div>
-                                    <div class="mode-title">Keyword</div>
-                                    <div class="mode-desc">Auto-fetch from keywords</div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="selected-gifs-list" id="buttonSelectedGifs">
-                            <p style="color: #b9bbbe; margin: auto;">Click GIFs below to add</p>
-                        </div>
-                        
-                        <div class="gif-selector" id="buttonGifSelector"></div>
-                    </div>
-                </div>
-                
-                <!-- Preview Tab -->
-                <div id="tab-preview" class="tab-content">
-                    <div class="section-header">
-                        <h3>👁️ Live Preview</h3>
-                        <p>See exactly how your sticky message and button response will look</p>
-                    </div>
-                    
-                    <h4 style="color: white; margin-bottom: 15px;">📌 Sticky Message Preview:</h4>
-                    <div class="preview-embed" id="previewStickyEmbed">
-                        <div class="preview-embed-title" id="previewStickyTitle">Title</div>
-                        <div class="preview-embed-description" id="previewStickyDescription">Description</div>
-                        <img class="preview-gif" id="previewStickyGif" src="" alt="Sticky GIF" style="display: none;">
-                        <div class="preview-button" id="previewButton">Button Text</div>
-                    </div>
-                    
-                    <div style="margin-top: 30px;"></div>
-                    
-                    <h4 style="color: white; margin-bottom: 15px;">🔘 Button Response Preview:</h4>
-                    <div class="preview-section">
-                        <div class="preview-embed-description" id="previewButtonResponse" style="margin-bottom: 15px;">Response message...</div>
-                        <img class="preview-gif" id="previewButtonGif" src="" alt="Button GIF" style="display: none;">
-                    </div>
-                    
-                    <div class="info-box" style="margin-top: 20px;">
-                        <p><strong>📌 Sticky:</strong> <span id="infoStickyMode">Random</span> mode, <span id="infoStickyCount">0</span> GIFs/Keywords</p>
-                        <p><strong>🔘 Button:</strong> <span id="infoButtonMode">Random</span> mode, <span id="infoButtonCount">0</span> GIFs/Keywords</p>
-                    </div>
-                </div>
-                
-                <div style="display: flex; gap: 10px; margin-top: 30px; padding-top: 20px; border-top: 2px solid #2f3136;">
-                    <button type="submit" class="btn btn-success">💾 Save Configuration</button>
-                    <button type="button" class="btn btn-danger" onclick="deleteSticky()">🗑️ Delete Sticky</button>
-                    <button type="button" class="btn btn-primary" onclick="switchTab('preview')">👁️ Preview</button>
-                </div>
-            </form>
         </div>
     </div>
     
@@ -913,8 +940,144 @@
         let tenorSearchResults = { sticky: [], button: [] };
         let currentGifSource = { sticky: 'uploaded', button: 'uploaded' };
         
-        // Tenor API key (free tier)
         const TENOR_API_KEY = 'AIzaSyAyimkuYQYF_FXVALexPuGQctUWRURdCYQ';
+        
+        // Load user
+        async function loadUser() {
+            const response = await fetch('/api/user');
+            const user = await response.json();
+            document.getElementById('sidebarUsername').textContent = user.username;
+            document.getElementById('sidebarAvatar').src = user.avatar;
+        }
+        
+        // Load servers
+        async function loadServers() {
+            const response = await fetch('/api/guilds');
+            const guilds = await response.json();
+            
+            const list = document.getElementById('serversList');
+            list.innerHTML = '';
+            
+            guilds.forEach(guild => {
+                const item = document.createElement('div');
+                item.className = 'server-item';
+                item.onclick = () => selectServer(guild);
+                
+                const icon = guild.icon 
+                    ? `<img src="${guild.icon}" class="server-item-icon" alt="${guild.name}">`
+                    : `<div class="server-item-icon">${guild.name.charAt(0)}</div>`;
+                
+                item.innerHTML = `
+                    ${icon}
+                    <div class="server-item-name">${guild.name}</div>
+                `;
+                
+                list.appendChild(item);
+            });
+        }
+        
+        // Select server
+        async function selectServer(guild) {
+            currentGuildId = guild.id;
+            
+            // Update UI
+            document.querySelectorAll('.server-item').forEach(i => i.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+            
+            document.getElementById('currentServerName').textContent = guild.name;
+            document.getElementById('currentServerInfo').textContent = `${guild.memberCount} members`;
+            
+            // Show channel management
+            document.getElementById('emptyState').style.display = 'none';
+            document.getElementById('channelManagement').style.display = 'block';
+            
+            // Load channels
+            const response = await fetch(`/api/guilds/${guild.id}/channels`);
+            const channels = await response.json();
+            
+            const dropdown = document.getElementById('channelDropdown');
+            dropdown.innerHTML = '<option value="">Choose a channel...</option>';
+            
+            channels.forEach(channel => {
+                const option = document.createElement('option');
+                option.value = channel.id;
+                option.textContent = `# ${channel.name}` + (channel.hasSticky ? ' ✓' : '');
+                dropdown.appendChild(option);
+            });
+            
+            // Load GIFs
+            loadGifs();
+        }
+        
+        // Channel dropdown change
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('channelDropdown').addEventListener('change', async (e) => {
+                const channelId = e.target.value;
+                
+                if (!channelId) {
+                    document.getElementById('configArea').classList.remove('active');
+                    return;
+                }
+                
+                currentChannelId = channelId;
+                document.getElementById('configArea').classList.add('active');
+                
+                // Load config
+                await loadGifsForSelectors();
+                
+                try {
+                    const response = await fetch(`/api/guilds/${currentGuildId}/channels/${channelId}/config`);
+                    if (response.ok) {
+                        const config = await response.json();
+                        
+                        document.getElementById('stickyTitle').value = config.title;
+                        document.getElementById('stickyDescription').value = config.description;
+                        document.getElementById('stickyColor').value = config.color;
+                        document.getElementById('buttonText').value = config.buttonText;
+                        document.getElementById('buttonResponse').value = config.responseMessage || '';
+                        
+                        stickyGifs = config.stickyGifs || config.gifs || [];
+                        stickyMode = config.stickyMode || config.mode || 'random';
+                        buttonGifs = config.buttonGifs || [];
+                        buttonMode = config.buttonMode || 'random';
+                        
+                        if (config.stickyKeywords) {
+                            document.getElementById('stickyKeywords').value = config.stickyKeywords;
+                        }
+                        if (config.buttonKeywords) {
+                            document.getElementById('buttonKeywords').value = config.buttonKeywords;
+                        }
+                        
+                        updateModeSelectors();
+                        updateSelectedGifsLists();
+                        updatePreview();
+                        
+                        showMessage('✅ Configuration loaded', 'success');
+                    }
+                } catch (e) {
+                    // New config
+                }
+            });
+            
+            // Mode selectors
+            document.querySelectorAll('.mode-selector .mode-option').forEach(opt => {
+                opt.addEventListener('click', () => {
+                    const selector = opt.closest('.mode-selector');
+                    const isButton = selector.id === 'buttonModeSelector';
+                    const mode = opt.dataset.mode;
+                    
+                    if (isButton) {
+                        buttonMode = mode;
+                    } else {
+                        stickyMode = mode;
+                    }
+                    
+                    selector.querySelectorAll('.mode-option').forEach(o => o.classList.remove('selected'));
+                    opt.classList.add('selected');
+                    updatePreview();
+                });
+            });
+        });
         
         function switchTab(tab) {
             document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
@@ -931,12 +1094,10 @@
         function switchGifSource(type, source) {
             currentGifSource[type] = source;
             
-            // Update active tab
             const tabs = event.target.closest('.gif-source-tabs').querySelectorAll('.source-tab');
             tabs.forEach(tab => tab.classList.remove('active'));
             event.target.classList.add('active');
             
-            // Show/hide search bar
             const searchBar = document.getElementById(`${type}SearchBar`);
             const keywordInput = document.getElementById(`${type}KeywordInput`);
             const selector = document.getElementById(`${type}GifSelector`);
@@ -944,11 +1105,11 @@
             if (source === 'tenor') {
                 searchBar.style.display = 'flex';
                 keywordInput.style.display = 'none';
-                selector.innerHTML = '<p style="color: #b9bbbe; padding: 20px;">Search for GIFs above!</p>';
+                selector.innerHTML = '<p style="color: #b9bbbe; padding: 20px;">Search above!</p>';
             } else if (source === 'keyword') {
                 searchBar.style.display = 'none';
                 keywordInput.style.display = 'block';
-                selector.innerHTML = '<p style="color: #b9bbbe; padding: 20px;">Enter keywords above and select Keyword mode</p>';
+                selector.innerHTML = '<p style="color: #b9bbbe; padding: 20px;">Enter keywords above</p>';
             } else {
                 searchBar.style.display = 'none';
                 keywordInput.style.display = 'none';
@@ -958,37 +1119,31 @@
         }
         
         async function searchGifs(type) {
-            const searchInput = document.getElementById(`${type}SearchInput`);
-            const query = searchInput.value.trim();
-            
-            if (!query) {
-                alert('Please enter a search term');
-                return;
-            }
+            const query = document.getElementById(`${type}SearchInput`).value.trim();
+            if (!query) return alert('Enter search term');
             
             const selector = document.getElementById(`${type}GifSelector`);
-            selector.innerHTML = '<p style="color: #b9bbbe; padding: 20px;">Searching Tenor...</p>';
+            selector.innerHTML = '<p style="color: #b9bbbe; padding: 20px;">Searching...</p>';
             
             try {
                 const response = await fetch(`https://tenor.googleapis.com/v2/search?q=${encodeURIComponent(query)}&key=${TENOR_API_KEY}&client_key=sticky_bot&limit=20`);
                 const data = await response.json();
                 
                 if (data.results && data.results.length > 0) {
-                    tenorSearchResults[type] = data.results.map(result => ({
-                        url: result.media_formats.gif.url,
-                        preview: result.media_formats.tinygif.url
+                    tenorSearchResults[type] = data.results.map(r => ({
+                        url: r.media_formats.gif.url,
+                        preview: r.media_formats.tinygif.url
                     }));
                     
                     selector.innerHTML = '';
-                    tenorSearchResults[type].forEach((gif, index) => {
+                    tenorSearchResults[type].forEach(gif => {
                         const option = document.createElement('div');
                         option.className = 'gif-option';
                         const gifs = type === 'sticky' ? stickyGifs : buttonGifs;
                         
                         if (gifs.includes(gif.url)) {
                             option.classList.add('selected');
-                            const order = gifs.indexOf(gif.url) + 1;
-                            option.innerHTML = `<img src="${gif.preview}"><div class="gif-order">${order}</div>`;
+                            option.innerHTML = `<img src="${gif.preview}"><div class="gif-order">${gifs.indexOf(gif.url) + 1}</div>`;
                         } else {
                             option.innerHTML = `<img src="${gif.preview}">`;
                         }
@@ -997,131 +1152,11 @@
                         selector.appendChild(option);
                     });
                 } else {
-                    selector.innerHTML = '<p style="color: #b9bbbe; padding: 20px;">No results found. Try different keywords!</p>';
+                    selector.innerHTML = '<p style="color: #b9bbbe; padding: 20px;">No results</p>';
                 }
             } catch (error) {
-                console.error('Tenor search error:', error);
-                selector.innerHTML = '<p style="color: #ed4245; padding: 20px;">Search failed. Please try again.</p>';
+                selector.innerHTML = '<p style="color: #ed4245; padding: 20px;">Search failed</p>';
             }
-        }
-        
-        async function loadUser() {
-            const response = await fetch('/api/user');
-            const user = await response.json();
-            document.getElementById('username').textContent = user.username;
-            document.getElementById('userAvatar').src = user.avatar;
-        }
-        
-        async function loadServers() {
-            const response = await fetch('/api/guilds');
-            const guilds = await response.json();
-            
-            const grid = document.getElementById('serversGrid');
-            grid.innerHTML = '';
-            
-            guilds.forEach(guild => {
-                const card = document.createElement('div');
-                card.className = 'server-card';
-                card.onclick = () => openServerModal(guild);
-                
-                const icon = guild.icon 
-                    ? `<img src="${guild.icon}" class="server-icon" alt="${guild.name}">`
-                    : `<div class="server-icon">${guild.name.charAt(0)}</div>`;
-                
-                card.innerHTML = `${icon}<div class="server-info"><h3>${guild.name}</h3><p>${guild.memberCount} members</p></div>`;
-                grid.appendChild(card);
-            });
-        }
-        
-        async function openServerModal(guild) {
-            currentGuildId = guild.id;
-            document.getElementById('modalServerName').textContent = guild.name;
-            document.getElementById('serverModal').style.display = 'block';
-            
-            const response = await fetch(`/api/guilds/${guild.id}/channels`);
-            const channels = await response.json();
-            
-            const list = document.getElementById('channelsList');
-            list.innerHTML = '';
-            
-            channels.forEach(channel => {
-                const item = document.createElement('div');
-                item.className = 'channel-item';
-                item.innerHTML = `
-                    <div class="channel-name">
-                        <span>#</span>
-                        <span>${channel.name}</span>
-                        ${channel.hasSticky ? '<span class="sticky-badge">✓ Active</span>' : ''}
-                    </div>
-                    <button class="btn btn-primary" onclick="openStickyModal('${channel.id}', '${channel.name}')">
-                        ${channel.hasSticky ? '✏️ Edit' : '➕ Create'}
-                    </button>
-                `;
-                list.appendChild(item);
-            });
-        }
-        
-        function closeModal() {
-            document.getElementById('serverModal').style.display = 'none';
-        }
-        
-        async function openStickyModal(channelId, channelName) {
-            currentChannelId = channelId;
-            document.getElementById('stickyChannelName').textContent = `# ${channelName}`;
-            document.getElementById('stickyModal').style.display = 'block';
-            
-            // Reset to first tab
-            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-            document.querySelector('.tab').classList.add('active');
-            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-            document.getElementById('tab-sticky').classList.add('active');
-            
-            await loadGifsForSelectors();
-            
-            // Try to load existing config
-            try {
-                const response = await fetch(`/api/guilds/${currentGuildId}/channels/${channelId}/config`);
-                if (response.ok) {
-                    const config = await response.json();
-                    
-                    // Sticky settings
-                    document.getElementById('stickyTitle').value = config.title;
-                    document.getElementById('stickyDescription').value = config.description;
-                    document.getElementById('stickyColor').value = config.color;
-                    stickyGifs = config.stickyGifs || config.gifs || [];
-                    stickyMode = config.stickyMode || config.mode || 'random';
-                    
-                    // Keyword settings
-                    if (config.stickyKeywords) {
-                        document.getElementById('stickyKeywords').value = config.stickyKeywords;
-                    }
-                    
-                    // Button settings
-                    document.getElementById('buttonText').value = config.buttonText;
-                    document.getElementById('buttonResponse').value = config.responseMessage || '';
-                    buttonGifs = config.buttonGifs || [];
-                    buttonMode = config.buttonMode || 'random';
-                    
-                    if (config.buttonKeywords) {
-                        document.getElementById('buttonKeywords').value = config.buttonKeywords;
-                    }
-                    
-                    updateModeSelectors();
-                    updateSelectedGifsLists();
-                    updatePreview();
-                }
-            } catch (e) {
-                // No existing config
-            }
-        }
-        
-        function closeStickyModal() {
-            document.getElementById('stickyModal').style.display = 'none';
-            document.getElementById('stickyForm').reset();
-            stickyGifs = [];
-            buttonGifs = [];
-            stickyMode = 'random';
-            buttonMode = 'random';
         }
         
         async function loadGifsForSelectors() {
@@ -1137,7 +1172,7 @@
             selector.innerHTML = '';
             
             if (allGifs.length === 0) {
-                selector.innerHTML = '<p style="color: #b9bbbe; padding: 20px;">No GIFs uploaded yet</p>';
+                selector.innerHTML = '<p style="color: #b9bbbe; padding: 20px;">No GIFs uploaded</p>';
                 return;
             }
             
@@ -1146,8 +1181,7 @@
                 option.className = 'gif-option';
                 if (selectedList.includes(gif.url)) {
                     option.classList.add('selected');
-                    const order = selectedList.indexOf(gif.url) + 1;
-                    option.innerHTML = `<img src="${gif.url}"><div class="gif-order">${order}</div>`;
+                    option.innerHTML = `<img src="${gif.url}"><div class="gif-order">${selectedList.indexOf(gif.url) + 1}</div>`;
                 } else {
                     option.innerHTML = `<img src="${gif.url}">`;
                 }
@@ -1166,25 +1200,20 @@
                 list.push(url);
             }
             
-            // Refresh appropriate selector
             if (currentGifSource[type] === 'uploaded') {
                 populateGifSelector(`${type}GifSelector`, list, type);
             } else if (currentGifSource[type] === 'tenor') {
-                // Refresh tenor results
                 const selector = document.getElementById(`${type}GifSelector`);
                 selector.innerHTML = '';
                 tenorSearchResults[type].forEach(gif => {
                     const option = document.createElement('div');
                     option.className = 'gif-option';
-                    
                     if (list.includes(gif.url)) {
                         option.classList.add('selected');
-                        const order = list.indexOf(gif.url) + 1;
-                        option.innerHTML = `<img src="${gif.preview}"><div class="gif-order">${order}</div>`;
+                        option.innerHTML = `<img src="${gif.preview}"><div class="gif-order">${list.indexOf(gif.url) + 1}</div>`;
                     } else {
                         option.innerHTML = `<img src="${gif.preview}">`;
                     }
-                    
                     option.onclick = () => toggleGif(gif.url, type);
                     selector.appendChild(option);
                 });
@@ -1206,7 +1235,7 @@
             const list = document.getElementById(listId);
             
             if (gifs.length === 0) {
-                list.innerHTML = '<p style="color: #b9bbbe; margin: auto;">Click GIFs below to add</p>';
+                list.innerHTML = '<p style="color: #b9bbbe; margin: auto;">Select GIFs</p>';
                 return;
             }
             
@@ -1214,10 +1243,7 @@
             gifs.forEach((url, index) => {
                 const item = document.createElement('div');
                 item.className = 'selected-gif-item';
-                item.innerHTML = `
-                    <img src="${url}">
-                    <button class="remove-gif" onclick="removeGif(${index}, '${type}')">&times;</button>
-                `;
+                item.innerHTML = `<img src="${url}"><button class="remove-gif" onclick="removeGif(${index}, '${type}')">&times;</button>`;
                 list.appendChild(item);
             });
         }
@@ -1238,83 +1264,41 @@
             updatePreview();
         }
         
-        // Mode selection
-        document.addEventListener('DOMContentLoaded', () => {
-            document.querySelectorAll('#stickyModeSelector .mode-option').forEach(opt => {
-                opt.addEventListener('click', () => {
-                    stickyMode = opt.dataset.mode;
-                    document.querySelectorAll('#stickyModeSelector .mode-option').forEach(o => o.classList.remove('selected'));
-                    opt.classList.add('selected');
-                    updatePreview();
-                });
-            });
-            
-            document.querySelectorAll('#buttonModeSelector .mode-option').forEach(opt => {
-                opt.addEventListener('click', () => {
-                    buttonMode = opt.dataset.mode;
-                    document.querySelectorAll('#buttonModeSelector .mode-option').forEach(o => o.classList.remove('selected'));
-                    opt.classList.add('selected');
-                    updatePreview();
-                });
-            });
-        });
-        
         function updateModeSelectors() {
-            document.querySelectorAll('#stickyModeSelector .mode-option').forEach(opt => {
-                opt.classList.toggle('selected', opt.dataset.mode === stickyMode);
-            });
-            document.querySelectorAll('#buttonModeSelector .mode-option').forEach(opt => {
-                opt.classList.toggle('selected', opt.dataset.mode === buttonMode);
+            document.querySelectorAll('.mode-selector .mode-option').forEach(opt => {
+                const isButton = opt.closest('.mode-selector').id === 'buttonModeSelector';
+                const mode = isButton ? buttonMode : stickyMode;
+                opt.classList.toggle('selected', opt.dataset.mode === mode);
             });
         }
         
         function updatePreview() {
-            // Sticky preview
             document.getElementById('previewStickyTitle').textContent = document.getElementById('stickyTitle').value || 'Title';
             document.getElementById('previewStickyDescription').textContent = document.getElementById('stickyDescription').value || 'Description';
             document.getElementById('previewButton').textContent = document.getElementById('buttonText').value || 'Button';
-            document.getElementById('previewStickyEmbed').style.borderLeftColor = document.getElementById('stickyColor').value;
+            document.getElementById('previewButtonResponse').textContent = document.getElementById('buttonResponse').value || 'Response';
             
             const stickyGif = document.getElementById('previewStickyGif');
-            if (stickyMode === 'keyword') {
-                const keywords = document.getElementById('stickyKeywords').value;
-                stickyGif.style.display = 'none';
-                document.getElementById('infoStickyCount').textContent = keywords ? `"${keywords}"` : 'No keywords';
-            } else if (stickyGifs.length > 0) {
+            if (stickyGifs.length > 0) {
                 stickyGif.src = stickyGifs[0];
                 stickyGif.style.display = 'block';
-                document.getElementById('infoStickyCount').textContent = stickyGifs.length;
             } else {
                 stickyGif.style.display = 'none';
-                document.getElementById('infoStickyCount').textContent = '0';
             }
-            
-            // Button preview
-            const buttonResponse = document.getElementById('buttonResponse').value || 'No response message';
-            document.getElementById('previewButtonResponse').textContent = buttonResponse;
             
             const buttonGif = document.getElementById('previewButtonGif');
-            if (buttonMode === 'keyword') {
-                const keywords = document.getElementById('buttonKeywords').value;
-                buttonGif.style.display = 'none';
-                document.getElementById('infoButtonCount').textContent = keywords ? `"${keywords}"` : 'No keywords';
-            } else if (buttonGifs.length > 0) {
+            if (buttonGifs.length > 0) {
                 buttonGif.src = buttonGifs[0];
                 buttonGif.style.display = 'block';
-                document.getElementById('infoButtonCount').textContent = buttonGifs.length;
             } else {
                 buttonGif.style.display = 'none';
-                document.getElementById('infoButtonCount').textContent = '0';
             }
-            
-            // Info
-            const modeNames = { random: 'Random', cycle: 'Cycle', single: 'Single', keyword: 'Keyword' };
-            document.getElementById('infoStickyMode').textContent = modeNames[stickyMode];
-            document.getElementById('infoButtonMode').textContent = modeNames[buttonMode];
         }
         
         document.getElementById('stickyForm').onsubmit = async (e) => {
             e.preventDefault();
+            
+            if (!currentChannelId) return;
             
             const data = {
                 title: document.getElementById('stickyTitle').value,
@@ -1322,15 +1306,11 @@
                 buttonText: document.getElementById('buttonText').value,
                 responseMessage: document.getElementById('buttonResponse').value,
                 color: document.getElementById('stickyColor').value,
-                stickyGifs: stickyGifs,
-                stickyMode: stickyMode,
+                stickyGifs, stickyMode,
                 stickyKeywords: document.getElementById('stickyKeywords').value,
-                buttonGifs: buttonGifs,
-                buttonMode: buttonMode,
+                buttonGifs, buttonMode,
                 buttonKeywords: document.getElementById('buttonKeywords').value,
-                // Backwards compatibility
-                gifs: stickyGifs,
-                mode: stickyMode
+                gifs: stickyGifs, mode: stickyMode
             };
             
             const response = await fetch(`/api/guilds/${currentGuildId}/channels/${currentChannelId}/config`, {
@@ -1340,11 +1320,7 @@
             });
             
             if (response.ok) {
-                showMessage('✅ Configuration saved!', 'success');
-                setTimeout(() => {
-                    closeStickyModal();
-                    openServerModal({ id: currentGuildId, name: document.getElementById('modalServerName').textContent });
-                }, 1500);
+                showMessage('✅ Saved!', 'success');
             } else {
                 showMessage('❌ Failed to save', 'error');
             }
@@ -1359,10 +1335,9 @@
             
             if (response.ok) {
                 showMessage('✅ Deleted!', 'success');
-                setTimeout(() => {
-                    closeStickyModal();
-                    openServerModal({ id: currentGuildId, name: document.getElementById('modalServerName').textContent });
-                }, 1500);
+                document.getElementById('stickyForm').reset();
+                stickyGifs = [];
+                buttonGifs = [];
             }
         }
         
@@ -1411,7 +1386,7 @@
         }
         
         async function deleteGif(id) {
-            if (!confirm('Delete this GIF?')) return;
+            if (!confirm('Delete?')) return;
             
             const response = await fetch(`/api/gifs/${id}`, { method: 'DELETE' });
             
@@ -1423,11 +1398,11 @@
         }
         
         function showMessage(text, type) {
-            const messageDiv = document.getElementById('stickyMessage');
-            messageDiv.className = type === 'success' ? 'success-message' : 'error-message';
-            messageDiv.textContent = text;
-            messageDiv.style.display = 'block';
-            setTimeout(() => messageDiv.style.display = 'none', 3000);
+            const msg = document.getElementById('statusMessage');
+            msg.className = type === 'success' ? 'success-message' : 'error-message';
+            msg.textContent = text;
+            msg.style.display = 'block';
+            setTimeout(() => msg.style.display = 'none', 3000);
         }
         
         function logout() {
@@ -1436,7 +1411,6 @@
         
         loadUser();
         loadServers();
-        loadGifs();
     </script>
 </body>
 </html>
