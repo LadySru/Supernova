@@ -21,8 +21,8 @@ app.use(helmet({
             defaultSrc: ["'self'"],
             styleSrc: ["'self'", "'unsafe-inline'"],
             scriptSrc: ["'self'", "'unsafe-inline'"],
-            imgSrc: ["'self'", "data:", "https://cdn.discordapp.com"],
-            connectSrc: ["'self'"]
+            imgSrc: ["'self'", "data:", "https://cdn.discordapp.com", "https:", "http:"],
+            connectSrc: ["'self'", "https://tenor.googleapis.com"]
         }
     }
 }));
@@ -215,10 +215,14 @@ function hasGuildAccess(req, res, next) {
 
 app.get('/', (req, res) => {
     if (req.isAuthenticated()) {
-        res.sendFile(path.join(__dirname, 'public', 'dashboard.html'));
+        res.redirect('/dashboard');
     } else {
         res.sendFile(path.join(__dirname, 'public', 'index.html'));
     }
+});
+
+app.get('/dashboard', isAuth, (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'dashboard.html'));
 });
 
 // ===== AUTH ROUTES =====
@@ -231,7 +235,7 @@ app.get('/auth/discord/callback',
         failureMessage: true
     }),
     (req, res) => {
-        res.redirect('/');
+        res.redirect('/dashboard');
     }
 );
 
