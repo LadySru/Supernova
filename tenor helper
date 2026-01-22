@@ -1,0 +1,45 @@
+// Tenor API Helper
+const https = require('https');
+
+const TENOR_API_KEY = 'AIzaSyAyimkuYQYF_FXVALexPuGQctUWRURdCYQ';
+
+async function fetchTenorGif(keywords) {
+    return new Promise((resolve, reject) => {
+        if (!keywords || keywords.trim() === '') {
+            return reject(new Error('No keywords provided'));
+        }
+        
+        // Clean and prepare keywords
+        const query = encodeURIComponent(keywords.trim());
+        const url = `https://tenor.googleapis.com/v2/search?q=${query}&key=${TENOR_API_KEY}&client_key=sticky_bot&limit=20&media_filter=gif`;
+        
+        https.get(url, (res) => {
+            let data = '';
+            
+            res.on('data', (chunk) => {
+                data += chunk;
+            });
+            
+            res.on('end', () => {
+                try {
+                    const json = JSON.parse(data);
+                    
+                    if (json.results && json.results.length > 0) {
+                        // Get random GIF from results
+                        const randomIndex = Math.floor(Math.random() * json.results.length);
+                        const gifUrl = json.results[randomIndex].media_formats.gif.url;
+                        resolve(gifUrl);
+                    } else {
+                        reject(new Error('No GIFs found for keywords'));
+                    }
+                } catch (error) {
+                    reject(error);
+                }
+            });
+        }).on('error', (error) => {
+            reject(error);
+        });
+    });
+}
+
+module.exports = { fetchTenorGif };
