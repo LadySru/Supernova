@@ -224,6 +224,11 @@ app.get('/', (req, res) => {
     if (req.isAuthenticated()) {
         res.redirect('/dashboard');
     } else {
+        // Check for error parameter
+        const error = req.query.error;
+        if (error) {
+            console.log('❌ Landing page error:', error);
+        }
         res.sendFile(path.join(__dirname, 'public', 'index.html'));
     }
 });
@@ -239,10 +244,15 @@ app.get('/auth/discord', passport.authenticate('discord'));
 
 app.get('/auth/discord/callback', 
     passport.authenticate('discord', { 
-        failureRedirect: '/',
+        failureRedirect: '/?error=auth_failed',
         failureMessage: true
     }),
     (req, res) => {
+        if (!req.user) {
+            console.error('❌ OAuth callback: No user in request');
+            return res.redirect('/?error=no_user');
+        }
+        
         console.log('✅ OAuth success! User:', req.user?.username);
         console.log('📝 Session ID:', req.sessionID);
         console.log('🔐 Authenticated:', req.isAuthenticated());
@@ -251,7 +261,7 @@ app.get('/auth/discord/callback',
         req.session.save((err) => {
             if (err) {
                 console.error('❌ Session save error:', err);
-                return res.redirect('/?error=session');
+                return res.redirect('/?error=session_save');
             }
             console.log('💾 Session saved, redirecting to dashboard');
             res.redirect('/dashboard');
